@@ -2,11 +2,11 @@ import Repolist from './component/Repolist';
 import RepoPage from './component/RepoPage';
 import RepoNav from './component/RepoNav';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import datafetch from './datafetch';
 import {repo, repoL, loadingState} from './typedefine';
 import {createUseStyles} from 'react-jss';
-import { Spinner } from 'react-bootstrap';
+import {Spinner} from 'react-bootstrap';
 
 function App(){
 	const [username, setUsername] = useState("");
@@ -14,6 +14,7 @@ function App(){
 	const [loading, setLoading] = useState(loadingState.none);
 	const [page, setPage] = useState(1);
 	const [repo, setRepo] = useState<repo>();
+	const myRef = useRef<HTMLDivElement>(null);
 
 	const classes = createUseStyles({
 		root: {
@@ -87,6 +88,7 @@ function App(){
 	}
 
 	const search = (input: string) => {
+		myRef.current?.scrollTo(0, 0);
 		setUsername(input);
 		setLoading(loadingState.new);
 	}
@@ -101,7 +103,7 @@ function App(){
 	}
 
 	return(<>
-		<div className={classes.root} onWheel={checkScroll} onTouchMove={checkScroll}>
+		<div className={classes.root} onWheel={checkScroll} onTouchMove={checkScroll} ref={myRef}>
 			<RepoNav search={search}/>
 			<Repolist repolist={repolist} openRepo={openRepo}/>
 		</div>
