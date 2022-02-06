@@ -69,7 +69,10 @@ function App(){
 			else if(data.length !== 10) setPage(-1);
 			else setPage(prev => prev+1);
 		})
-		.catch(err => window.alert(err));
+		.catch(err => {
+			setLoading(loadingState.none);
+			window.alert(err);
+		});
 	}, [loading, page, username]);
 
 	const openRepo = (reponame: string) => {
