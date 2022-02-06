@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {Container, Navbar, Form, FormControl, Button} from "react-bootstrap";
 import {createUseStyles} from "react-jss";
-
+ 
 function RepoNav(props: {
 	search: (input: string) => void
 }){
