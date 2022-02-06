@@ -3,13 +3,13 @@ import {ListGroup, Badge} from "react-bootstrap";
 function RepoRow(props: {
 	reponame: string,
 	starcount: number,
-	open: (reponame: string) => void
+	open: () => void
 }){
 	return(
 		<ListGroup.Item
 			className="d-flex justify-content-between align-items-start"
 			action
-			onClick={() => props.open(props.reponame)}
+			onClick={props.open}
 		>
 			 <div className="ms-2 me-auto fw-bold">{props.reponame}</div>
 			 <Badge bg="primary" pill>⭐{props.starcount}</Badge>
