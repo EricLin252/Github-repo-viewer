@@ -1,46 +1,108 @@
-# Getting Started with Create React App
+# Github Repository Viewer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+網頁連結(PC/Mobile)：https://ericlin252.github.io/
 
-## Available Scripts
+## 使用說明
 
-In the project directory, you can run:
+在搜尋欄搜尋用戶後，repo列表即會出現在下方。
+每次搜尋會顯示10個repo，滑動至頁面底端後會再顯示更多repo。
+若想了解repo的內容，可直接點選repo，會顯示repo的說明以及github連結。
 
-### `npm start`
+## 架構說明
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+該專案使用React，配合React Bootstrap與React Hook，簡化專案實作過程，並且使用typescript。
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Typedefine
+```typescript
+////單個repo的詳細資訊////
+type repo = {
+  fullname: string,     //repo的完整名字
+  description: string,  //repo的說明
+  starcount: number,    //repo的star數
+  url: string           //repo的github連結
+}
 
-### `npm test`
+////repolist的資料內容，為repo簡易資訊的一個array////
+type repoL = {
+  reponame: string,   //repo的名字
+  starcount: number   //repo的star數
+}[];
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+////網頁搜尋狀態enum////
+const enum loadingState {
+  none,     //無狀態
+  new,      //新搜索用戶
+  append    //對相同用戶搜索更多repo
+};
+```
+### Component
 
-### `npm run build`
+#### RepoRow：Repo列表中的repo欄位。
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```typescript
+props: {
+  reponame: string,   //repo的名字
+  starcount: number,  //repo的star數
+  open: () => void    //repo被點選時要執行的function
+}
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Repolist：Repo列表。
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```typescript
+props: {
+  repolist: repoL,                  //列表顯示資料內容
+  openRepo: (repo: string) => void  //搜尋repo內容時要執行的function
+}
+```
 
-### `npm run eject`
+#### RepoNav：標頭欄。
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```typescript
+props: {
+  search: (input: string) => void //搜尋用戶時要執行的function
+}
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### RepoPage：repo的詳細資訊頁面。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```typescript
+props: {
+  show: boolean,                      //控制頁面是否顯示
+  fullname: string | undefined,       //repo的完整名字
+  description:  string | undefined,   //repo的介紹
+  starcount:  number | undefined,     //repo的star數
+  url: string | undefined,            //repo的github連結
+  close: () => void                   //頁面關閉時要執行的function
+}
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 執行流程
 
-## Learn More
+* 點選搜尋按鈕
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+去除輸入的多餘空白後，若是使用者未輸入內容，略過搜尋。
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+若搜尋欄有輸入，將loading狀態改為new，並將輸入存至username，repolist清空。
+
+將username合併至query url中，fetch資料，並將資料儲存至repolist中。
+
+將repolist中的內容顯示出來，並將頁面回歸至頂。
+
+* 下拉頁面至底
+
+若loading的狀態不是none，略過搜尋。
+
+若page為-1(代表該用戶沒有更多repo可以顯示)，略過搜尋。
+
+若仍可搜尋更多內容，將loading狀態改為append，
+
+將username與page合併至query url中，fetch資料，並將資料合併至repolist中。
+
+最後將repolist中的內容顯示出來。
+
+* 點選repo
+
+將username與reponame合併至query url，fetch資料，並將資料更新至repo中。
+
+最後將repo的內容顯示在RepoPage中。
