@@ -1,20 +1,29 @@
 import {useState} from "react";
 import {Container, Navbar, Form, FormControl, Button} from "react-bootstrap";
+import {createUseStyles} from "react-jss";
 
 function RepoNav(props: {
-    search: (input: string) => void
+	search: (input: string) => void
 }){
-    const [username, setUsername] = useState("");
+	const classes = createUseStyles({
+		brand: {
+			"@media screen and (max-width: 450px)": {
+				display: "block!important"
+			}
+		}
+	})();
 
-    const submit = (e: React.FormEvent) => {
-        props.search(username);
-        e.preventDefault();
-      	e.stopPropagation();
-    }
+	const [username, setUsername] = useState("");
 
-    return(
-        <Navbar bg="dark" variant="dark" onSubmit={submit} sticky="top">
-			<Container>
+	const submit = (e: React.FormEvent) => {
+		props.search(username);
+		e.preventDefault();
+	  	e.stopPropagation();
+	}
+
+	return(
+		<Navbar bg="dark" variant="dark" onSubmit={submit} sticky="top">
+			<Container className={classes.brand}>
 				<Navbar.Brand>Github RepoViewer</Navbar.Brand>
 				<Form className="d-flex">
 					<FormControl
@@ -29,7 +38,7 @@ function RepoNav(props: {
 				</Form>
 			</Container>
 		</Navbar>
-    );
+	);
 }
 
 export default RepoNav;
