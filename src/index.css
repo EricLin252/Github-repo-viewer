@@ -18,3 +18,33 @@ html, body, #root{
 	overflow: hidden;
 	margin: 0%;
 }
+
+.result {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.result1 {
+  background-image: url('./imgs/result1.png');
+}
+
+.result2 {
+  background-image: url('./imgs/result2.png');
+}
+
+.result3 {
+  background-image: url('./imgs/result3.png');
+}
+
+.result4 {
+  background-image: url('./imgs/result4.png');
+}
+
+.result5 {
+  background-image: url('./imgs/result5.png');
+}
+
+.result6 {
+  background-image: url('./imgs/result6.png');
+}
