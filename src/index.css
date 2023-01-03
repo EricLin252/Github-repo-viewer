@@ -48,3 +48,10 @@ html, body, #root{
 .result6 {
   background-image: url('./imgs/result6.png');
 }
+
+.home {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('./imgs/home.png');
+}

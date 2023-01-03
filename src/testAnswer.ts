@@ -1,8 +1,26 @@
 export const testAnswer = (answer: number[]) => {
     const a1 = answer[0];
     const a2 = answer[3];
-    const ans = a2 * 3 + a1 + 1;
-    return ans;
+    if(a2){
+        switch(a1){
+            case 0:
+                return 3
+            case 1:
+                return 5
+            default:
+                return 6
+        }
+    }
+    else {
+        switch(a1){
+            case 0:
+                return 2
+            case 1:
+                return 1
+            default:
+                return 4
+        }
+    }
 }
 
 export const links = [

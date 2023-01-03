@@ -8,9 +8,8 @@ type Props_Home = {
 export const Home: React.FC<Props_Home> = ({start}) => {
     const styles = useStyle();
     return(
-        <div className={styles.root}>
-            <p className={styles.title}>心理測驗「你的原生底色」</p>
-            <button className={styles.start} onClick={start}>開始測驗！</button>
+        <div className={`${styles.root} home`}>
+            <button className={styles.start} onClick={start}/>
         </div>
     );
 };
@@ -19,10 +18,10 @@ const useStyle = createUseStyles({
     root: {
         display: 'flex',
         width: '100%',
-        height: '100%',
+        height: '185.25vw',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     title: {
         color: '#2f5496',
@@ -30,7 +29,12 @@ const useStyle = createUseStyles({
         fontSize: 'large'
     },
     start: {
-        fontWeight: 'bolder',
-        fontSize: 'large'
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        border: 'none',
+        width: '40%',
+        height: '20vw',
+        top: '125vw',
+        left: '30%'
     }
 });

@@ -34,6 +34,7 @@ const useStyle = createUseStyles({
 	root: {
 		width: '95vw',
 		height: '100vh',
+		overflowY: 'scroll',
 		position: 'absolute',
 		top: 0,
 		left: '2.5vw',
